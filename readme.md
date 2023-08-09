@@ -1,5 +1,5 @@
 Malaria Prediction Using Machine Learning - README
-
+![image](https://gesundheit.naanoo.de/wp-content/uploads/2015/11/malaria-mikroskop.jpg)
 Welcome to the Malaria Prediction Using Machine Learning project! This repository houses an innovative initiative that leverages advanced machine learning techniques to predict the presence or absence of malaria in individuals. Malaria, a prevalent and potentially life-threatening disease, often presents with a range of symptoms that can be challenging to diagnose accurately and promptly. This project aims to address this issue by harnessing the power of data-driven insights to enhance malaria diagnosis.
 
 Project Overview:
