@@ -33,13 +33,3 @@ Navigate to the notebooks/ directory to access the Jupyter notebooks guiding you
 Follow the instructions in the notebooks to preprocess the data, build machine learning models, and evaluate their performance.
 
 Experiment with different algorithms and techniques to enhance the model's predictive capabilities.
-
-Contributing:
-
-We welcome contributions from the community! Whether you're interested in improving the model's accuracy, enhancing data preprocessing, or refining the project's documentation, your input is valuable. Feel free to submit pull requests or open issues to engage with the project.
-
-License:
-
-This project is licensed under the MIT License, which encourages open collaboration and sharing.
-
-Let's work together to leverage machine learning for more accurate malaria prediction and ultimately contribute to better healthcare outcomes. Happy coding!
