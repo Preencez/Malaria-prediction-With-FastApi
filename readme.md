@@ -33,3 +33,9 @@ Navigate to the notebooks/ directory to access the Jupyter notebooks guiding you
 Follow the instructions in the notebooks to preprocess the data, build machine learning models, and evaluate their performance.
 
 Experiment with different algorithms and techniques to enhance the model's predictive capabilities.
+Contact For any questions or inquiries regarding the project, please feel free to contact:
+
+Faith Berida Data Analyst at Azubi Africa
+
+LinkedIn:https://www.linkedin.com/in/faith-toyin-berida-513097a2
+medium (https://princesstoy07.medium.com/) website
