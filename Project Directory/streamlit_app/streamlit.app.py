@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import time
 import os 
 
-
+import streamlit as st
+import joblib
+import numpy as np
 
 # Load the categorical imputer, numerical imputer, label encoder, and Random Forest model
 categorical_imputer_filepath = "D:\Projects\Malaria prediction With FastApi\Project Directory\Ml components\categorical_imputer.joblib"

@@ -1,20 +1,17 @@
-# Use the official Python image as the base image
-FROM python:3.9
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim-buster
 
-# Copy the Streamlit app file to the /app/ directory inside the container
-COPY streamlit_app.py /app/
-
-# Copy the FastAPI app file to the /app/ directory inside the container
-COPY main.py /app/
-
-# Set the working directory
+# Set the working directory to /app
 WORKDIR /app
 
-# Install required dependencies for both Streamlit and FastAPI
-RUN pip install pandas joblib scikit-learn streamlit fastapi uvicorn
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Expose the ports used by Streamlit and FastAPI
+# Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+# Expose the ports for Streamlit and FastAPI
 EXPOSE 8501 8000
 
-# Start the FastAPI app with uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run both Streamlit and FastAPI
+CMD ["streamlit", "run", "streamlit_app.py"]

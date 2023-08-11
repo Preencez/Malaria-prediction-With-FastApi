@@ -22,7 +22,7 @@
 # 
 # Question 3: are there Risk factors and gender
 
-# In[59]:
+# In[1]:
 
 
 #importing Libraries
@@ -55,7 +55,9 @@ from sklearn.svm import SVC
 from sklearn.ensemble import GradientBoostingClassifier
 import os
 from joblib import dump
-
+from sklearn.preprocessing import StandardScaler
+from imblearn.over_sampling import RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler
 
 
 # In[2]:
@@ -408,7 +410,24 @@ X_train_encoded = encoder.fit_transform(X_train[categorical_columns])
 X_test_encoded = encoder.transform(X_test[categorical_columns])
 
 
+# ### Scalling 
+
 # In[28]:
+
+
+# Initialize StandardScaler
+scaler = StandardScaler()
+
+# Scale the one-hot encoded categorical columns in the training and testing sets
+X_train_encoded_scaled = scaler.fit_transform(X_train_encoded)
+X_test_encoded_scaled = scaler.transform(X_test_encoded)
+
+# Printing the shape of the scaled one-hot encoded datasets
+print("X_train_encoded_scaled shape:", X_train_encoded_scaled.shape)
+print("X_test_encoded_scaled shape:", X_test_encoded_scaled.shape)
+
+
+# In[29]:
 
 
 # Define the name of the numerical column
@@ -423,7 +442,7 @@ X_test_final = np.hstack((X_test_encoded, X_test[[numerical_column]]))
 # ### Model 1
 # #### RandomForestClassiier
 
-# In[29]:
+# In[30]:
 
 
 # Train a Random Forest classifier
@@ -431,7 +450,7 @@ clf = RandomForestClassifier(random_state=42)
 clf.fit(X_train_final, y_train)
 
 
-# In[30]:
+# In[31]:
 
 
 # Perform predictions and evaluate the model
@@ -457,7 +476,7 @@ print("F1-Score:", f1)
 print("ROC AUC:", roc_auc)
 
 
-# In[31]:
+# In[32]:
 
 
 from sklearn.metrics import roc_curve, auc
@@ -480,7 +499,7 @@ plt.legend(loc="lower right")
 plt.show()
 
 
-# In[32]:
+# In[33]:
 
 
 # Compute Precision-Recall curve
@@ -498,7 +517,7 @@ plt.ylim([0.0, 1.05])
 plt.show()
 
 
-# In[33]:
+# In[34]:
 
 
 from sklearn.metrics import confusion_matrix
@@ -519,7 +538,7 @@ plt.show()
 
 # ### Support Vector Machine (SVM) Classifier
 
-# In[36]:
+# In[35]:
 
 
 # Create and train a Support Vector Machine classifier
@@ -530,7 +549,7 @@ svm_classifier.fit(X_train_final, y_train)
 y_pred_svm = svm_classifier.predict(X_test_final)
 
 
-# In[38]:
+# In[36]:
 
 
 # Convert 'yes' and 'no' labels in y_pred_svm to numeric values (1 and 0)
@@ -551,7 +570,7 @@ print("F1-Score:", f1_svm)
 print("ROC AUC:", roc_auc_svm)
 
 
-# In[43]:
+# In[37]:
 
 
 # Convert 'yes' and 'no' labels to numeric values (1 and 0)
@@ -580,7 +599,7 @@ plt.show()
 
 # ###  Gradient Boosting classifier
 
-# In[45]:
+# In[38]:
 
 
 # Create and train a Gradient Boosting classifier
@@ -591,14 +610,14 @@ gb_classifier.fit(X_train_final, y_train)
 y_pred_gb = gb_classifier.predict(X_test_final)
 
 
-# In[46]:
+# In[39]:
 
 
 # Convert 'yes' and 'no' labels to numeric values (1 and 0) for evaluation
 y_pred_gb_numeric = label_encoder.transform(y_pred_gb)
 
 
-# In[47]:
+# In[40]:
 
 
 # Calculate and print evaluation metrics
@@ -616,7 +635,7 @@ print("F1-Score:", f1_gb)
 print("ROC AUC:", roc_auc_gb)
 
 
-# In[48]:
+# In[41]:
 
 
 # Compute confusion matrix for Gradient Boosting classifier
@@ -631,7 +650,7 @@ plt.title("Gradient Boosting Classifier Confusion Matrix")
 plt.show()
 
 
-# In[49]:
+# In[42]:
 
 
 # Compute ROC curve for Gradient Boosting classifier
@@ -653,7 +672,7 @@ plt.show()
 
 # ### Metrics comparison
 
-# In[54]:
+# In[43]:
 
 
 import pandas as pd
@@ -674,7 +693,7 @@ metrics_df = pd.DataFrame(data)
 print(metrics_df)
 
 
-# In[56]:
+# In[44]:
 
 
 # Define colors for each model
@@ -702,7 +721,7 @@ plt.show()
 # ### Hyperparameter tunning of the best model
 # RandomForestClassifier
 
-# In[55]:
+# In[45]:
 
 
 from sklearn.model_selection import GridSearchCV
@@ -732,7 +751,7 @@ print("Best Parameters:", best_params)
 print("Best Score:", best_score)
 
 
-# In[57]:
+# In[46]:
 
 
 # Use the best model for prediction on test data
@@ -740,7 +759,7 @@ best_clf = grid_search.best_estimator_
 y_pred_test = best_clf.predict(X_test_final)
 
 
-# In[58]:
+# In[47]:
 
 
 # Print the predicted labels
@@ -749,7 +768,7 @@ print("Predicted Labels:", y_pred_test)
 
 # ### saving the best Model
 
-# In[66]:
+# In[49]:
 
 
 # Specify the desired destination directory
@@ -770,10 +789,15 @@ dump(categorical_imputer, categorical_imputer_filepath)
 encoder_filepath = os.path.join(destination, "label_encoder.joblib")
 dump(label_encoder, encoder_filepath)
 
+# Export the scaler
+scaler_filepath = os.path.join(destination, "scaler.joblib")
+dump(scaler, scaler_filepath)
+
 # Print the paths to the exported components
 print(f"Best Random Forest Model exported to: {best_model_filepath}")
 print(f"Categorical Imputer exported to: {categorical_imputer_filepath}")
 print(f"Label Encoder exported to: {encoder_filepath}")
+print(f"Scaler exported to: {scaler_filepath}")
 
 
 # In[ ]:
