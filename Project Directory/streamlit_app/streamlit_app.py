@@ -1,23 +1,13 @@
 import streamlit as st
-import pandas as pd
-import joblib
-import matplotlib.pyplot as plt
-import time
-import os 
-
-import streamlit as st
 import joblib
 import numpy as np
 
-# Load the categorical imputer, numerical imputer, label encoder, and Random Forest model
-categorical_imputer_filepath = "D:\Projects\Malaria prediction With FastApi\Project Directory\Ml components\categorical_imputer.joblib"
-label_encoder_filepath = "D:\Projects\Malaria prediction With FastApi\Project Directory\Ml components\label_encoder.joblib"
-best_rf_model_filepath = "D:\Projects\Malaria prediction With FastApi\Project Directory\Ml components\best_rf_model.joblib"
-scaler_filepath = "D:\Projects\Malaria prediction With FastApi\Project Directory\Ml components\scaler.joblib"
-scaler = load(scaler_filepath)
+# Load the categorical imputer, label encoder, and Random Forest model
+categorical_imputer_filepath = "D:/Projects/Malaria prediction With FastApi/Project Directory/Ml components/categorical_imputer.joblib"
+label_encoder_filepath = "D:/Projects/Malaria prediction With FastApi/Project Directory/Ml components/label_encoder.joblib"
+best_rf_model_filepath = "D:/Projects/Malaria prediction With FastApi/Project Directory/Ml components/best_rf_model.joblib"
 
 categorical_imputer = joblib.load(categorical_imputer_filepath)
-num_imputer = joblib.load(num_imputer_filepath)
 label_encoder = joblib.load(label_encoder_filepath)
 model = joblib.load(best_rf_model_filepath)
 
@@ -40,8 +30,7 @@ def main():
         "cough": np.array([cough])
     }
 
-    # Impute missing values and encode categorical features
-    input_data["age"] = num_imputer.transform(input_data["age"])
+    # Encode categorical features
     input_data["gender"] = label_encoder.transform(input_data["gender"])
     
     # Make prediction
